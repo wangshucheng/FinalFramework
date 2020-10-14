@@ -1,21 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
-using FirServer.Defines;
+using FirServer;
+using FirServer.Define;
 using GameLibs.FirSango.Interface;
+using log4net;
 
 namespace GameLibs.FirSango
 {
     public class GameRoom : GameBehaviour, IRoom
     {
+        private static readonly ILog logger = LogManager.GetLogger(AppServer.repository.Name, typeof(GameRoom));
+
         private uint roomId = 0;
         private uint maxCount = 0;
-        private bool isPlaying = false;
         private Dictionary<long, User> users = new Dictionary<long, User>();
 
         public void Initialize(string name, uint roomId)
         {
             this.roomId = roomId;
-            Console.WriteLine(name + " Game Room " + roomId + " Created!");
+            logger.Info("Game Room " + roomId + "("+ name + ")" + " Created!");
         }
 
         public bool OnEnter(User user)
@@ -51,26 +54,6 @@ namespace GameLibs.FirSango
         public uint GetRoomId()
         {
             return roomId;
-        }
-
-        public bool OnGenZhu(User user, uint count)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool OnJiaZhu(User user, uint count)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool OnKanPai(User user, uint targetId)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool OnQiPai(User user)
-        {
-            throw new NotImplementedException();
         }
 
         public bool OnPK(User user, uint targetId)

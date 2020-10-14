@@ -1,13 +1,13 @@
 ﻿using log4net;
-using FirServer.Defines;
-using FirServer.Models;
+using FirServer.Define;
 using LiteNetLib;
 using LiteNetLib.Utils;
 using System.Collections.Generic;
-using FirServer.Handlers;
+using FirServer.Handler;
 using FirServer;
 using GameLibs.FirSango.Defines;
-using Utility;
+using GameLibs.FirSango.Model;
+using System;
 
 namespace GameLibs.FirSango.Handlers
 {
@@ -24,16 +24,17 @@ namespace GameLibs.FirSango.Handlers
             var dw = new NetDataWriter();
             dw.Put(GameProtocal.Register);
 
-            var newid = AppUtil.NewGuidId();
-            var values = new List<string>();
-            values.Add("str:" + username);
-            values.Add("str:" + password);
-            values.Add("long:" + "10000");
-
+            var user = new UserInfo()
+            {
+                username = username,
+                password = password,
+                money = 10000L,
+                lasttime = DateTime.Now.ToShortDateString()
+            };
             var userModel = modelMgr.GetModel(ModelNames.User) as UserModel;
             if (userModel != null)
             {
-                uid = userModel.AddUser(values);
+                uid = userModel.AddUser(user);
             }
             var result = uid == 0 ? ResultCode.Failed : ResultCode.Success;
             dw.Put((ushort)result);

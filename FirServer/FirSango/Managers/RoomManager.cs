@@ -1,22 +1,20 @@
-
-using System;
 using System.Collections.Generic;
 using System.Net.WebSockets;
 using System.Security;
 using FirServer;
-using FirServer.Defines;
-using FirServer.Interface;
-using GameLibs.FirSango.Defines;
+using FirServer.Manager;
 using GameLibs.FirSango.Interface;
+using log4net;
 using Utility;
 
 namespace GameLibs.FirSango.Managers
 {
-    public class RoomManager : BaseBehaviour, IManager
+    public class RoomManager : BaseManager
     {
+        private static readonly ILog logger = LogManager.GetLogger(AppServer.repository.Name, typeof(RoomManager));
         private Dictionary<uint, Dictionary<uint, IRoom>> gameRooms = new Dictionary<uint, Dictionary<uint, IRoom>>();
 
-        public void Initialize()
+        public override void Initialize()
         {
             LoadParseXml();
         }
@@ -36,7 +34,7 @@ namespace GameLibs.FirSango.Managers
                         var name = node.Attribute("name");
                         var roomCount = uint.Parse(node.Attribute("roomCount"));
                         var roomUserMax = uint.Parse(node.Attribute("roomUserMax"));
-                        this.CreateRooms(id, name, roomCount, roomUserMax);
+                        CreateRooms(id, name, roomCount, roomUserMax);
                     }
                 }
             }
@@ -89,10 +87,6 @@ namespace GameLibs.FirSango.Managers
                 }
             }
             return null;
-        }
-
-        public void OnDispose()
-        {
         }
     }
 }

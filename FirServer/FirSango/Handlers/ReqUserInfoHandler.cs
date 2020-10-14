@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
-using FirServer;
-using FirServer.Defines;
-using FirServer.Handlers;
-using FirServer.Models;
+﻿using FirServer;
+using FirServer.Define;
+using FirServer.Handler;
+using GameLibs.FirSango.Defines;
+using GameLibs.FirSango.Model;
 using LiteNetLib;
 using LiteNetLib.Utils;
 using log4net;
@@ -19,13 +19,11 @@ namespace GameLibs.FirSango.Handlers
             var userModel = modelMgr.GetModel(ModelNames.User) as UserModel;
             if (userModel != null)
             {
-                var list = new List<string>();
-                list.Add("long:uid=" + uid);
-                var row = userModel.GetRow(list);
-                if (row != null)
+                var doc = userModel.GetDoc<UserInfo>(u => u.uid == uid);
+                if (doc != null)
                 {
                     dw.Put((ushort)ResultCode.Success);
-                    dw.Put(row["username"].ToString());
+                    dw.Put(doc.username);
                 }
                 else 
                 {

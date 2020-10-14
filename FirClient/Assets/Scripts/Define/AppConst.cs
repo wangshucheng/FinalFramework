@@ -1,29 +1,20 @@
+using FirClient.Define;
 using UnityEngine;
-
-public enum AppState
-{
-    None,
-    IsPlaying,
-    Exiting,
-}
 
 public class AppConst
 {
-    public static bool DebugMode = true;                        //调试模式-用于内部测试
-    public static bool LogMode = true;                          //日志模式
-    public static bool UpdateMode = true;                       //更新模式
+    public static bool DebugMode = false;                       //调试模式-用于内部测试
+    public static bool LogMode = false;                         //日志模式
+    public static bool UpdateMode = false;                      //更新模式
     public static bool LuaByteMode = false;                     //Lua字节码模式-默认关闭 
+    public static bool ShowFps = false;                         //显示帧频
     public static AppState AppState = AppState.None;            //APP的状态
 
     public static int GameFrameRate = 30;                       //帧频数
     public const uint BatchProcCount = 5;                       //ZIP批处理次数
-    public const uint TotalCreateMapBatch = 2;                  //创建地图总批次
-    public const int TimerInterval = 1;
     public const int NetMessagePoolMax = 100;
 
     public const int DefaultSortLayer = 0;                      //默认层渲染排序值
-    public const int MapTileSortLayer = 0;                      //地图层渲染排序值
-    public const int TilemapSortLayer = 1;
     public const int RoleSortLayer = 3;                         //角色层渲染排序值
     public const int BattleTempSortingOrder = 100;              //战斗时临时排序
 
